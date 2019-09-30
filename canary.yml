@@ -1,0 +1,20 @@
+apiVersion: flagger.app/v1alpha3
+kind: Canary
+metadata:
+  name: podinfo
+  namespace: test
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: podinfo
+  service:
+    port: 9898
+  canaryAnalysis:
+    interval: 10s
+    threshold: 10
+    stepWeight: 30
+    metrics:
+    - name: request-success-rate
+      threshold: 99
+      interval: 30s
